@@ -3,9 +3,15 @@ import sharp from "sharp";
 import path from 'path';
 import api from "../api/index.js";
 import middlewares from '../middlewares.js';
+import cors from 'cors';
+import morgan from 'morgan';
+import helmet from 'helmet';
 
 const app = express();
 
+app.use(cors());
+app.use(morgan('dev'));
+app.use(helmet());
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -56,7 +62,7 @@ app.get('/:stack', (req, res) => {
     }
 });
 
-app.use('/api', api);
+app.use('/api/v1', api);
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
 
